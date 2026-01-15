@@ -1,6 +1,6 @@
 let interval = [];
 let counter = [];
-    
+   
 const startTimer = (event) => {
     const startBtnID = event.target.id;
     const timerID = parseInt(startBtnID);
@@ -12,6 +12,7 @@ const startTimer = (event) => {
     }
     // TODO: Alert for invalid input. Can not be empty or less than 0 or not a number.
     if (counter[timerID] <= 0) {
+        
         return;
         // alert("Please enter a valid number.")
         // return
@@ -32,6 +33,7 @@ const startTimer = (event) => {
         
         // Clear/Stop Interval if the timer reaches 0;
         if (counter[timerID] <= 0) {
+            document.getElementById("alarm-sound").play();
             stopTimer(event)
         }
     }, 1000)
@@ -51,6 +53,7 @@ const stopTimer = (event) => {
     const timerID = parseInt(stopBtnID);
     clearInterval(interval[timerID]);
     document.getElementById(`${timerID}-startBtn`).disabled = false;
+     
 }
 
 const resetTimer = (event) => {
@@ -75,6 +78,7 @@ const removeDiv = (event) => {
     timerDiv.remove();
 }    
 
+// ======================================= Global Functions ==================================
 const syncAllTimers = () => {
     const arrayWithBtnClassNames = document.querySelectorAll(".start-button");
     
@@ -88,6 +92,37 @@ const syncAllTimers = () => {
     }
 }
 
+const startAll = () => {
+    const allBtnClassNames = document.querySelectorAll(".start-button")
+    for (let i = 0; i < allBtnClassNames.length; i++) {
+        const timerIndex = parseInt(allBtnClassNames[i].id);
+        startTimer({target: {id: `${timerIndex}-startBtn`}});
+    }
+}
+
+const stopAll = () => {
+    const allBtnClassNames = document.querySelectorAll(".start-button")
+    for (let i = 0; i < allBtnClassNames.length; i++) {
+        const timerIndex = parseInt(allBtnClassNames[i].id);
+        stopTimer({target: {id: `${timerIndex}-startBtn`}});
+    }
+}
+
+const resetAll = () => {
+    const allBtnClassNames = document.querySelectorAll(".start-button")
+    for (let i = 0; i < allBtnClassNames.length; i++) {
+        const timerIndex = parseInt(allBtnClassNames[i].id);
+        resetTimer({target: {id: `${timerIndex}-startBtn`}});
+    }
+}
+
+const removeAll = () => {
+    const allBtnClassNames = document.querySelectorAll(".start-button")
+    for (let i = 0; i < allBtnClassNames.length; i++) {
+        const timerIndex = parseInt(allBtnClassNames[i].id);
+        removeDiv({target: {id: `${timerIndex}-startBtn`}});
+    }
+}
 // =============================== ADD NEW TIMER FUNCTION ===============================
 let idIndex = 0;
 const addNewTimer = () => {
@@ -148,7 +183,7 @@ const addNewTimer = () => {
         id: `${idIndex}-removeBtn`,
         className: "btn remove-button",
     });
-    const textForRemoveBtn = document.createTextNode("Remove Timer");
+    const textForRemoveBtn = document.createTextNode("X");
     removeBtn.appendChild(textForRemoveBtn);
     
     // Clear Interval if running
