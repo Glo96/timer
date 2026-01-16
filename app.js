@@ -9,10 +9,10 @@ const startTimer = (event) => {
     // Initialize Counter if it's 0 or less
     if (counter[timerID] <= 0) {
         counter[timerID] = document.getElementById(inputID).value;
+        counter[timerID] = Math.floor(counter[timerID] * 1000)
     }
     // TODO: Alert for invalid input. Can not be empty or less than 0 or not a number.
     if (counter[timerID] <= 0) {
-        
         return;
         // alert("Please enter a valid number.")
         // return
@@ -20,12 +20,12 @@ const startTimer = (event) => {
 
     // Guard Clause For Start Button Spam
     event.target.disabled = true;
-    
+    document.getElementById("all-start").disabled = true
     displayTimer(timerID); 
 
     // Set Interval 
     interval[timerID] = setInterval(() => {
-        counter[timerID]--;
+        counter[timerID] -= 10;
         console.log("Hi I am an interval and I am still working...");
         
         // Timer Display Update
@@ -36,24 +36,24 @@ const startTimer = (event) => {
             document.getElementById("alarm-sound").play();
             stopTimer(event)
         }
-    }, 1000)
+    }, 10)
 }
 
 const displayTimer = (timerID) => {
-    const timeElapsed = counter[timerID];
+    const totalSecondsElapsed = counter[timerID];
 
-    const seconds = Math.floor(timeElapsed / 1000) % 60;
-    const minutes = Math.floor(timeElapsed / 60000) % 60;
-    const hours = Math.floor(timeElapsed / 3600000);
-    const milliseconds = timeElapsed % 1000; 
+    const hours = Math.floor(totalSecondsElapsed / 3600000);
+    const minutes = Math.floor((totalSecondsElapsed % 3600000) / 60000);
+    const seconds = Math.floor((totalSecondsElapsed % 60000) / 1000);
+    const milliseconds = totalSecondsElapsed % 1000;
 
     const timerDisplayID = `${timerID}-timer-display`;
 
     document.getElementById(timerDisplayID).innerHTML =
         `${String(hours).padStart(2, "0")}:` +
         `${String(minutes).padStart(2, "0")}:` +
-        `${String(seconds).padStart(2, "0")}` +
-        `${String(milliseconds).padStart(2, "0")}`;
+        `${String(seconds).padStart(2, "0")}:` +
+        `${String(milliseconds).padStart(3, "0")}`;;
 };
 
     
@@ -63,6 +63,15 @@ const stopTimer = (event) => {
     const timerID = parseInt(stopBtnID);
     clearInterval(interval[timerID]);
     document.getElementById(`${timerID}-startBtn`).disabled = false;
+    
+    //if all counter values are 0 then enable the start all button 
+    let isZero = true;
+    for (let i = 0; i < counter.length; i++) {
+        const element = counter[i];
+        if (element !== 0) isZero = false
+        
+    }
+    document.getElementById("all-start").disabled = !isZero;
      
 }
 
@@ -74,7 +83,7 @@ const resetTimer = (event) => {
     
     clearInterval(interval[timerID]);
     counter[timerID] = 0;
-    document.getElementById(timerDisplayID).innerHTML = "00:00";
+    document.getElementById(timerDisplayID).innerHTML = "00:00:00:00";
     document.getElementById(`${timerID}-startBtn`).disabled = false;
     document.getElementById(inputID).value = "";
 }
@@ -108,6 +117,7 @@ const startAll = () => {
         const timerIndex = parseInt(allBtnClassNames[i].id);
         startTimer({target: {id: `${timerIndex}-startBtn`}});
     }
+    
 }
 
 const stopAll = () => {
@@ -116,6 +126,7 @@ const stopAll = () => {
         const timerIndex = parseInt(allBtnClassNames[i].id);
         stopTimer({target: {id: `${timerIndex}-startBtn`}});
     }
+    document.getElementById("all-start").disabled = false;
 }
 
 const resetAll = () => {
@@ -157,6 +168,7 @@ const addNewTimer = () => {
     Object.assign(inputField, {
         type: "number",
         id: `${idIndex}-timer-input`,
+        className: "input-field",
         placeholder: "Enter duration in seconds",
     })
     
