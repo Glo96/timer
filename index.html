@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="add-btn-div">
+        <button id="add-timer" onclick="addNewTimer()">Add Timer</button>
+
+    </div>
     <div id="global-div">
         <audio id="alarm-sound" src="Recording.m4a"></audio>
-    
-        <button id="add-timer" class="btn global-btn" onclick="addNewTimer()">Add Timer</button>
         <button id="sync-timers" class="btn global-btn" onclick="syncAllTimers()">Sync All Timers</button>
-    
+        
         <button id="all-start" class="btn global-btn" onclick="startAll()">Start All Timers</button>
         <button id="all-stop" class="btn global-btn" onclick="stopAll()">Stop All Timers</button>
         <button id="all-reset" class="btn global-btn" onclick="resetAll()">Reset All Timers</button>

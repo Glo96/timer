@@ -40,12 +40,20 @@ const startTimer = (event) => {
 }
 
 const displayTimer = (timerID) => {
-    let seconds = counter[timerID] % 60;
-    let minutes = Math.floor(counter[timerID] / 60);
+    const totalSeconds = counter[timerID];
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
     const timerDisplayID = `${timerID}-timer-display`;
-    
-    document.getElementById(timerDisplayID).innerHTML = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-}
+
+    document.getElementById(timerDisplayID).innerHTML =
+        `${String(hours).padStart(2, "0")}:` +
+        `${String(minutes).padStart(2, "0")}:` +
+        `${String(seconds).padStart(2, "0")}`;
+};
+
     
 const stopTimer = (event) => {
     const stopBtnID = event.target.id;
@@ -156,7 +164,7 @@ const addNewTimer = () => {
         id: `${idIndex}-startBtn`,
         className: "btn start-button",
     })
-    const textForStartBtn = document.createTextNode("Start Timer")
+    const textForStartBtn = document.createTextNode("▶")
     startBtn.appendChild(textForStartBtn)
 
     // Stop Button
@@ -165,7 +173,7 @@ const addNewTimer = () => {
         id: `${idIndex}-stopBtn`,
         className: "btn stop-button",
     })
-    const textForStopBtn = document.createTextNode("Stop Timer")
+    const textForStopBtn = document.createTextNode("⏹")
     stopBtn.appendChild(textForStopBtn)
 
     // Reset Button
@@ -174,7 +182,7 @@ const addNewTimer = () => {
         id: `${idIndex}-resetBtn`,
         className: "btn reset-button",
     })
-    const textForResetBtn = document.createTextNode("Reset Timer")
+    const textForResetBtn = document.createTextNode("⟲")
     resetBtn.appendChild(textForResetBtn);
 
     //Remove Button

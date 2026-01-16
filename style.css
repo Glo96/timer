@@ -1,3 +1,19 @@
+body{
+  user-select: none;
+  background: linear-gradient(135deg, #03083a, #061066, #2c0881, #730ec5);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1{
+  color: white;
+  font-size: 50px;
+  
+}
+
 .timer-div{
   display: flex;
   justify-content: center;
@@ -8,7 +24,7 @@
 }
 
 .btn{
-  padding: 10px 18px;
+  padding: 8px 16px;
   border: 0;
   border-radius: 8px;
   font-weight: 600;
@@ -18,7 +34,7 @@
 
 .btn:hover{
   transform: translateY(-1px);
-  box-shadow: 0 6px 12px rgba(0,0,0,.15);
+  box-shadow: 0 0px 10px rgb(99, 155, 180);
 }
 
 .btn:active{
@@ -26,10 +42,17 @@
   box-shadow: 0 3px 6px rgba(0,0,0,.15);
 }
 
-.start-button{ background: #2ecc71; color: #fff; }
-.stop-button{ background:  #e67e22 ; color: #fff; }
-.reset-button{ background: #db3434; color: #fff; }
-.remove-button{ color: #af0000; font-size: 16px; font-weight: 800; }
+.start-button{ font-size: 20px; background: #00bb09; color: #fff; }
+.stop-button{ font-size: 20px; background:  #e67e22 ; color: #fff; }
+.reset-button{ font-size: 22px; background: #db3434; color: #fff; }
+.remove-button{ 
+  color: #af0000; 
+  font-size: 19px; 
+  font-weight: 800; 
+  background: #ffffff; 
+  padding: 3px 10px;
+  margin-bottom: 8px;
+}
 
 .btn:disabled{
   opacity: .45;
@@ -56,16 +79,36 @@ input{
 
 .global-btn{
   border-radius: 999px;
-  margin-top: 70px;
   margin-bottom: 50px;
   margin-left: 10px;
   font-size: 16px;
   color: #fff;
   padding: 12px 28px;
-  background: linear-gradient(135deg, #3867ff, #6d8fff);
+  background: linear-gradient(135deg, #119933, #70c50e);
 }
 
+.global-btn:hover{
+  background: linear-gradient(135deg, #15b43d, #79d60f);;
+}
+
+#add-btn-div{
+  display: flex;
+  justify-content: center
+}
 #add-timer{
-  background: #6c5ce7;
+  display:flex;
+  border:0;
+  border-radius: 999px;
+  margin: 30px 0 50px;
+  font-size: 25px;
+  color: #fff;
+  padding: 12px 28px;
+  cursor: pointer;
   background: linear-gradient(135deg, #6553ec, #887fff);
+  transition: transform .1s ease, box-shadow .1s ease, opacity .15s ease;
+}
+#add-timer:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 0px 10px rgb(99, 155, 180);
+  background: linear-gradient(135deg, #6f5cfa, #8e86ff);
 }
