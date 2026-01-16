@@ -40,18 +40,20 @@ const startTimer = (event) => {
 }
 
 const displayTimer = (timerID) => {
-    const totalSeconds = counter[timerID];
+    const timeElapsed = counter[timerID];
 
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+    const seconds = Math.floor(timeElapsed / 1000) % 60;
+    const minutes = Math.floor(timeElapsed / 60000) % 60;
+    const hours = Math.floor(timeElapsed / 3600000);
+    const milliseconds = timeElapsed % 1000; 
 
     const timerDisplayID = `${timerID}-timer-display`;
 
     document.getElementById(timerDisplayID).innerHTML =
         `${String(hours).padStart(2, "0")}:` +
         `${String(minutes).padStart(2, "0")}:` +
-        `${String(seconds).padStart(2, "0")}`;
+        `${String(seconds).padStart(2, "0")}` +
+        `${String(milliseconds).padStart(2, "0")}`;
 };
 
     
@@ -145,7 +147,7 @@ const addNewTimer = () => {
    
 
     const timerDisplay = document.createElement("h1");
-    const timerDisplayText = "00:00";
+    const timerDisplayText = "00:00:00";
     timerDisplay.id = `${idIndex}-timer-display`;
     timerDisplay.className = "timer-display";
     timerDisplay.append(timerDisplayText);
